@@ -10,6 +10,8 @@ import VueRouter from 'vue-router'
 //styles 
 import "../src/assets/sass/main.scss";
 
+
+// for better use we should separate them into another file 
 const routes = [
 	{ path: '/stock', component: StockPage },
 	{ path: '/currencyEX', component: CurrencyEXPage },
