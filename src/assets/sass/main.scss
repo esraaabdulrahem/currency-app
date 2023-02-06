@@ -1,0 +1,28 @@
+//components should be separated
+@import "../sass/components/GenericDashboard.scss";
+@import "../sass/components/GenericTabs.scss";
+
+//pages
+@import "../sass/pages/homepage.scss";
+
+.generic-title {
+	display: flex;
+	justify-content: center;
+}
+
+.generic-form-field {
+	.generic-form-field__label {
+		display: block;
+	}
+	.generic-form-field__input {
+		width: 20%;
+		height: 43px;
+	}
+	.generic-form-field__btn {
+		background-color: transparent;
+		border: 1px solid;
+		border-radius: 5px;
+		padding: 10px 40px;
+		margin-left: 10px;
+	}
+}

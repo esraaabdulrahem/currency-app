@@ -1,0 +1,13 @@
+.generic-tabs {
+	padding-top: 50px;
+	.nav-tabs {
+		margin-bottom: 20px;
+		.nav-item {
+			width: 50%;
+			text-align: center;
+			.nav-link {
+				color: green;
+			}
+		}
+	}
+}
