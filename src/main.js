@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import HomePage from '../src/views/HomePage'
 import App from "./App";
 import StockPage from "../src/views/StockPage.vue";
 import CurrencyEXPage from "../src/views/CurrencyEXPage.vue"
@@ -12,7 +11,6 @@ import VueRouter from 'vue-router'
 import "../src/assets/sass/main.scss";
 
 const routes = [
-	{ path: '/', component: HomePage },
 	{ path: '/stock', component: StockPage },
 	{ path: '/currencyEX', component: CurrencyEXPage },
 ];

@@ -27,7 +27,7 @@
           convert currency
         </button>
       </form>
-      <GenericDashboard
+      <currency-dashboard
         v-for="(item, index) in currencyExchangeLists"
         :key="index"
         :isStock="false"
@@ -36,62 +36,55 @@
         :bidPrice="item.bidPrice"
         :askPrice="item.askPrice"
         :exchangeRate="item.exchangeRate"
-      ></GenericDashboard>
+      ></currency-dashboard>
     </div>
   </div>
 </template>
   
 <script>
-import GenericDashboard from "../components/GenericDashboard/GenericDashboard.vue";
+import CurrencyDashboard from "@/components/GenericDashboard/CurrencyDashboard.vue";
 import { GetCurrencyToExchange } from "../components/GenericDashboard/services.js";
 
 export default {
-  components: { GenericDashboard },
+  components: { CurrencyDashboard },
   name: "StockCurrencyDashboard",
   data() {
     return {
       from: "",
       to: "",
-      fromCurrencyName: "",
-      toCurrencyName: "",
-      bidPrice: "",
-      askPrice: "",
-      exchangeRate: "",
       key: "NZ71MBHG40D7BDZX", // static for now
       currencyExchangeLists: [],
     };
   },
   methods: {
-    FXApiToModel() {
-		
-	},
+    FXApiToModel(response) {
+      //the api has no close so I used the pervious close instead
+      return {
+        toCurrencyName:
+          response.data["Realtime Currency Exchange Rate"][
+            "4. To_Currency Name"
+          ],
+        fromCurrencyName:
+          response.data["Realtime Currency Exchange Rate"][
+            "2. From_Currency Name"
+          ],
+        bidPrice:
+          response.data["Realtime Currency Exchange Rate"]["8. Bid Price"],
+        askPrice:
+          response.data["Realtime Currency Exchange Rate"]["9. Ask Price"],
+        exchangeRate:
+          response.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
+      };
+    },
 
     currencyExchange(from, to) {
       GetCurrencyToExchange(from, to, this.key).then((response) => {
-        if (response.status == 200) {
-          this.toCurrencyName =
-            response.data["Realtime Currency Exchange Rate"][
-              "4. To_Currency Name"
-            ];
-          this.fromCurrencyName =
-            response.data["Realtime Currency Exchange Rate"][
-              "2. From_Currency Name"
-            ];
-          this.bidPrice =
-            response.data["Realtime Currency Exchange Rate"]["8. Bid Price"];
-          this.askPrice =
-            response.data["Realtime Currency Exchange Rate"]["9. Ask Price"];
-          this.exchangeRate =
-            response.data["Realtime Currency Exchange Rate"][
-              "5. Exchange Rate"
-            ];
-          this.currencyExchangeLists.push({
-            fromCurrencyName: this.fromCurrencyName,
-            toCurrencyName: this.toCurrencyName,
-            bidPrice: this.bidPrice,
-            askPrice: this.askPrice,
-            exchangeRate: this.exchangeRate,
-          });
+        if (
+          response.status == 200 &&
+          Object.keys(response.data["Realtime Currency Exchange Rate"]).length >
+            0
+        ) {
+          this.currencyExchangeLists.push(this.FXApiToModel(response));
         } else {
           // we can handle error msg or toaster
         }

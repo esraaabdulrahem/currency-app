@@ -10,7 +10,7 @@
         />
         <button class="generic-form-field__btn" type="submit">add stock</button>
       </form>
-      <GenericDashboard
+      <stock-dashboard
         v-for="(stock, index) in stocklist"
         :key="index"
         :isStock="true"
@@ -19,17 +19,17 @@
         :high="stock.high"
         :low="stock.low"
         :stockSymbol="stock.stockSymbol"
-      ></GenericDashboard>
+      ></stock-dashboard>
     </div>
   </div>
 </template>
 
 <script>
-import GenericDashboard from "../components/GenericDashboard/GenericDashboard.vue";
+import StockDashboard from "@/components/GenericDashboard/StockDashboard.vue";
 import { GetStockInfo } from "../components/GenericDashboard/services.js";
 
 export default {
-  components: { GenericDashboard },
+  components: { StockDashboard },
   name: "StockCurrencyDashboard",
   data() {
     return {
